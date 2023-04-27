@@ -1,0 +1,41 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Search recipes app",
+  "main": "index.js",
+  "targets": {
+    "modern": {
+      "engines": {
+        "browsers": "Chrome 110"
+      }
+    },
+    "legacy": {
+      "engines": {
+        "browsers": "IE 11"
+      }
+    }
+  },
+  "browserslist": "IE 11",
+  "scripts": {
+    "dev": "parcel index.html --target modern --port 5000 --open",
+    "build": "parcel build --target legacy index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsindiaikinal/forkify.git"
+  },
+  "author": "Jonas and Alekseii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tsindiaikinal/forkify/issues"
+  },
+  "homepage": "https://github.com/tsindiaikinal/forkify#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.3",
+    "parcel": "^2.8.3"
+  },
+  "dependencies": {
+    "fracty": "^1.0.11"
+  }
+}
