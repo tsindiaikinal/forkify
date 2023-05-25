@@ -13,7 +13,7 @@ class PaginationView extends View {
       handler(goToPage);
     });
   }
- 
+
   _generateMarkup() {
     const numPages = Math.ceil(
       this._data.result.length / this._data.itemsPerPage
@@ -40,13 +40,17 @@ class PaginationView extends View {
   }
 
   _generateMarkupButton(direction, currentPage) {
-    const prev = `<button class="btn--inline pagination__btn--prev" data-page="${currentPage - 1}">
+    const prev = `<button class="btn--inline pagination__btn--prev" data-page="${
+      currentPage - 1
+    }">
             <svg class="search__icon">
               <use href="${icons}#icon-arrow-left"></use>
             </svg>
             <span>Page ${currentPage - 1}</span>
         </button>`;
-    const next = `<button class="btn--inline pagination__btn--next" data-page="${currentPage + 1}">
+    const next = `<button class="btn--inline pagination__btn--next" data-page="${
+      currentPage + 1
+    }">
             <span>Page ${currentPage + 1}</span>
             <svg class="search__icon">
               <use href="${icons}#icon-arrow-right"></use>
