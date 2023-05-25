@@ -13,7 +13,6 @@ class addRecipeView extends View {
   _overlay = document.querySelector('.overlay');
   _btnOpen = document.querySelector('.nav__btn--add-recipe');
   _btnClose = document.querySelector('.btn--close-modal');
-  _label = document.querySelectorAll(`label.ingredient`);
 
   constructor() {
     super();
@@ -30,19 +29,28 @@ class addRecipeView extends View {
 
   addNewField() {
     this._generateMarkup();
+    if (document.querySelectorAll('.upload__ingredient-column').length >= 20) {
+      this._btnAddField.style.display = 'none';
+    }
   }
 
   removeField(ev) {
     if (ev.target.closest('.btn--remove-field')) {
-      const fields = ev.target.closest('.upload__ingredients-wrapper').dataset
-        .ingredient;
+      
+      ev.target.closest('.upload__ingredient-column').remove();
 
-      document.querySelector(`label.${fields}`).remove();
-      ev.target.closest('.upload__ingredients-wrapper').remove();
+      if (
+        document.querySelectorAll('.upload__ingredient-column').length < 20
+      ) {
+        this._btnAddField.style.display = 'block';
+      }
 
-      this._ingredientNum = this._label.length;
-      this._label.forEach((el, i) => {
-        el.innerHTML = `Ingredient ${i + 1}`;
+      const label = document.querySelectorAll(`label.ingredient`);
+
+      this._ingredientNum = label.length;
+      // console.log(label.length);
+      label.forEach((el, i) => {
+        el.textContent = `Ingredient ${i + 1}`;
       });
     }
   }
@@ -74,24 +82,26 @@ class addRecipeView extends View {
   _generateMarkup() {
     this._ingredientNum++;
     const tmpl = `
-      <label class="ingredient ingr-${this._ingredientNum}">Ingredient ${this._ingredientNum}</label>
-      <div data-ingredient="ingr-${this._ingredientNum}" class="upload__ingredients-wrapper">
-        <input
-          type="text"
-          name="quantity"
-          placeholder="Quantity"
-        />
-        <input
-          type="text"
-          name="unit"
-          placeholder="Unit"
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-        />
-        <div class="btn--remove-field">&times;</div>
+      <div class="upload__ingredient-column">
+        <label class="ingredient">Ingredient ${this._ingredientNum}</label>
+        <div class="upload__ingredients-wrapper">
+          <input
+            type="text"
+            name="quantity"
+            placeholder="Quantity"
+          />
+          <input
+            type="text"
+            name="unit"
+            placeholder="Unit"
+          />
+          <input
+            type="text"
+            name="description"
+            placeholder="Description"
+          />
+          <div class="btn--remove-field">&times;</div>
+        </div>
       </div>
     `;
     this._columnIngredients.insertAdjacentHTML('beforeend', tmpl);
