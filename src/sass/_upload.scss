@@ -6,7 +6,7 @@
   }
 
   & input {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     padding: 0.8rem 1rem;
     border: 1px solid #ddd;
     border-radius: 0.5rem;
@@ -35,7 +35,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100rem;
+  width: 95rem;
   background-color: white;
   border-radius: 9px;
 
@@ -86,7 +86,7 @@
 .upload {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem 6rem;
+  gap: 4rem 5rem;
 
   &__column {
     display: grid;
@@ -111,7 +111,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.5rem;
 
     & label {
       width: 30%;
@@ -122,15 +122,15 @@
   }
 
   &__ingredients-wrapper {
-    width: 72%;
+    width: 80%;
     display: flex;
     justify-content: space-between;
     position: relative;
-    gap: 1.5rem;
+    gap: 0.5rem;
     @extend %form-elements;
 
     & input {
-      width: 30%;
+      width: 35%;
     }
   }
 
@@ -156,20 +156,4 @@
     font-size: 2rem;
     cursor: pointer;
   }
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgb(219, 211, 211);
-  border-radius: 10px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #F8B586;
-  border-radius: 10px;
 }
