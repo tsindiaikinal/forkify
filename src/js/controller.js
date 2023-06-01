@@ -147,8 +147,10 @@ const controlRemoveRecipe = async function (key, id) {
 
     resultView.render(model.getSearchResultPage());
 
-    recipeView.renderMessage('Your recipe has been successfully deleted 🔥');
+    // Rerender bookmark view
+    bookmarkView.render(model.state.bookmarks);
 
+    recipeView.renderMessage('Your recipe has been successfully deleted 🔥');
   } catch (error) {
     console.log(error);
     removeRecipeView.renderError(error.message);

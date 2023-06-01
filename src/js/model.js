@@ -182,6 +182,7 @@ export const removeRecipe = async function (key, id) {
       const index = state.search.result.findIndex(rec => rec.id === id);
 
       state.search.result.splice(index, 1);
+      deleteBookmark(id);
     }
   } catch (error) {
     console.log(error);
