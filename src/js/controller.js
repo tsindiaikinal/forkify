@@ -2,11 +2,11 @@ import { MODAL_CLOSE_SEC } from './config';
 import * as model from './model';
 import addRecipeView from './views/addRecipeView';
 import bookmarkView from './views/bookmarkView';
+import removeRecipeView from './views/removeRecipeView';
 import paginationView from './views/paginationView';
 import recipeView from './views/recipeView';
 import resultView from './views/resultView';
 import searchView from './views/searchView';
-
 
 // For Parcel bilder
 /* if (module.hot) {
@@ -25,10 +25,10 @@ const controlRecipes = async function () {
 
     // Update result view to mark selected search result
     resultView.update(model.getSearchResultPage());
-    
+
     // Loading recipe
     await model.loadRecipe(id);
-    
+
     // Update bookmark view
     bookmarkView.update(model.state.bookmarks);
 
@@ -109,7 +109,6 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderSpinner();
 
     await model.uploadRecipe(newRecipe);
-    console.log(model.state.recipe);
 
     //  Success message
     addRecipeView.renderMessage();
@@ -128,10 +127,33 @@ const controlAddRecipe = async function (newRecipe) {
       addRecipeView.controlWindow();
     }, MODAL_CLOSE_SEC * 1000);
   } catch (error) {
-   console.log(error)
+    console.log(error);
     addRecipeView.renderError(error.message);
   }
-}
+};
+
+const controlRemoveRecipe = async function (key, id) {
+  try {
+    // Render spinner function
+    resultView.renderSpinner();
+
+    await model.removeRecipe(key, id);
+
+    // Update preview view
+    removeRecipeView.update(model.state.search.result);
+
+    // Change id in url
+    window.history.pushState(null, '', `#`);
+
+    resultView.render(model.getSearchResultPage());
+
+    recipeView.renderMessage('Your recipe has been successfully deleted 🔥');
+
+  } catch (error) {
+    console.log(error);
+    removeRecipeView.renderError(error.message);
+  }
+};
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
@@ -141,5 +163,6 @@ const init = function () {
   paginationView.addHandlerClick(controlPagination);
   bookmarkView.addHandlerRender(controlBookmarks);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+  removeRecipeView.addHandlerRemove(controlRemoveRecipe);
 };
 init();

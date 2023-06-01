@@ -12,10 +12,10 @@ export const trimArray = function (arr) {
   return arr.map(el => el.trim());
 };
 
-export const AJAX = async function (url, uploadData = undefined) {
+export const AJAX = async function (url, uploadData = undefined, typeMethod = 'POST') {
   try {
     const options = {
-      method: 'POST',
+      method: typeMethod,
       headers: {
         'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',

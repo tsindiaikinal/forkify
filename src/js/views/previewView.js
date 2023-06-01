@@ -8,7 +8,23 @@ class PreviewView extends View {
     const id = window.location.hash.slice(1);
 
     return `
-    <li class="preview">
+    <li data-id="${this._data.id}" class="preview">
+        <div class="preview__menu 
+        ${this._data.key ? '' : 'hidden'}">
+          <svg class="preview__menu-icon">
+            <use href="${icons}#icon-dots-vertical"></use>
+          </svg>
+          <div class="preview__action-window hidden">
+            <ul class="action-window ${this._data.key ? '' : 'hidden'}">
+              <li class="action-window__item">
+                <svg class="action-window__icon">
+                  <use href="${icons}#icon-delete-outline"></use>
+                </svg>
+                <span class="action-window__text">delete</span>
+              </li>
+            </ul>
+          </div>
+        </div>
         <a class="preview__link ${
           this._data.id === id ? 'preview__link--active' : ''
         }" href="#${this._data.id}">
@@ -26,6 +42,7 @@ class PreviewView extends View {
                 <svg>
                 <use href="${icons}#icon-user"></use>
                 </svg>
+              </div>
               </div>
             </div>
         </a>

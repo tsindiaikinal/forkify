@@ -39,7 +39,7 @@ export const loadRecipe = async function (id) {
     } else {
       state.recipe.bookmarked = false;
     }
-    console.log(state.recipe);
+    // console.log(state.recipe);
   } catch (error) {
     console.log(`${error} 💥 💥 💥`);
     throw error;
@@ -129,13 +129,13 @@ const clearBookmarks = function () {
 
 export const uploadRecipe = async function (formData) {
   try {
-  const dataArr = [...formData];
-  const newRecipe = Object.fromEntries(dataArr);
+    const dataArr = [...formData];
+    const newRecipe = Object.fromEntries(dataArr);
 
-  // Sending data with FormData getAll method. Remove white space
-  const quantity = trimArray(formData.getAll('quantity'));
-  const unit = trimArray(formData.getAll('unit'));
-  const description = trimArray(formData.getAll('description'));
+    // Sending data with FormData getAll method. Remove white space
+    const quantity = trimArray(formData.getAll('quantity'));
+    const unit = trimArray(formData.getAll('unit'));
+    const description = trimArray(formData.getAll('description'));
 
     const ingredients = quantity.map((quantity, i) => {
       if (quantity === '' || unit[i] === '' || description[i] === '')
@@ -146,23 +146,6 @@ export const uploadRecipe = async function (formData) {
         description: description[i],
       };
     });
-
-    /* const ingredients = Object.entries(newRecipe)
-      .filter(entry => entry[0].startsWith('ingredient'))
-      .map(ing => {
-        const ingrArr = ing.map(ingr => ingr.trim());
-        console.log(ingrArr);
-        if (ingrArr[1] === '')
-          throw new Error('All fields must be filled! Please do it 🙂');
-
-        const [quantity, unit, description] = ingrArr;
-
-        return {
-          quantity: quantity ? +quantity : null,
-          unit,
-          description,
-        };
-      }); */
 
     // Creating a new recipe object to send to the server
     const recipe = {
@@ -182,6 +165,26 @@ export const uploadRecipe = async function (formData) {
 
     addBookmark(state.recipe);
   } catch (error) {
+    throw error;
+  }
+};
+
+// Remove own recipe
+export const removeRecipe = async function (key, id) {
+  try {
+    const recipe = state.search.result.find(recipe => recipe.id === id);
+    // console.log(recipe);
+    if (recipe && recipe.key === key) {
+      const res = await fetch(`${API_URL}/${id}?key=${key}`, {
+        method: 'DELETE',
+      });
+
+      const index = state.search.result.findIndex(rec => rec.id === id);
+
+      state.search.result.splice(index, 1);
+    }
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };
